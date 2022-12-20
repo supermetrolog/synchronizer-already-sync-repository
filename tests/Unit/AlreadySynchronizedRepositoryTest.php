@@ -114,6 +114,10 @@ class AlreadySynchronizedRepositoryTest extends TestCase
         $findedFile2 = $alreadyRepo->findFile($this->file2);
         $findedDir = $alreadyRepo->findFile($this->dir);
 
+        $this->assertNotNull($findedFile1);
+        $this->assertNotNull($findedFile2);
+        $this->assertNotNull($findedDir);
+
         $this->assertEquals(
             $this->file1->getUniqueName(),
             $findedFile1->getUniqueName()
@@ -280,11 +284,12 @@ class AlreadySynchronizedRepositoryTest extends TestCase
         ];
         $alreadyRepo->updateRepository([], $updatedFiles, []);
 
-        $this->assertNotNull($alreadyRepo->findFile($this->file1));
-        $this->assertNotEquals($this->file1->getHash(), $alreadyRepo->findFile($this->file1)->getHash());
-        $this->assertEquals($updatedFile1->getHash(), $alreadyRepo->findFile($this->file1)->getHash());
-        $this->assertEquals($this->file1->isDir(), $alreadyRepo->findFile($this->file1)->isDir());
-        $this->assertEquals($this->file1->getUniqueName(), $alreadyRepo->findFile($this->file1)->getUniqueName());
+        $findedFile1 = $alreadyRepo->findFile($this->file1);
+        $this->assertNotNull($findedFile1);
+        $this->assertNotEquals($this->file1->getHash(), $findedFile1->getHash());
+        $this->assertEquals($updatedFile1->getHash(), $findedFile1->getHash());
+        $this->assertEquals($this->file1->isDir(), $findedFile1->isDir());
+        $this->assertEquals($this->file1->getUniqueName(), $findedFile1->getUniqueName());
     }
 
     public function testUpdateRepositoryWithEmptyRepoAndRemovedFiles(): void
