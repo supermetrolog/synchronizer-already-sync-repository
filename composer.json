@@ -21,6 +21,7 @@
         }
     },
     "require": {
+        "php": "^7.4",
         "supermetrolog/synchronizer": "^2.0"
     },
     "require-dev": {
@@ -28,9 +29,11 @@
         "phpstan/phpstan": "^1.9",
         "squizlabs/php_codesniffer": "*"
     },
-    "authors": [{
-        "name": "supermetrolog",
-        "email": "billypro6@gmail.com"
-    }],
+    "authors": [
+        {
+            "name": "supermetrolog",
+            "email": "billypro6@gmail.com"
+        }
+    ],
     "minimum-stability": "stable"
 }
