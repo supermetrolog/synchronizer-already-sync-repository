@@ -13,7 +13,6 @@ class AlreadySynchronizedRepositoryTest extends TestCase
 {
     private RepositoryInterface $repository;
     private string $filename;
-    private FileInterface $metadataFile;
     private FileInterface $file1;
     private FileInterface $file2;
     private FileInterface $dir;
@@ -21,7 +20,6 @@ class AlreadySynchronizedRepositoryTest extends TestCase
     public function setUp(): void
     {
         $this->repository = $this->createMock(RepositoryInterface::class);
-        $this->metadataFile = $this->createMock(FileInterface::class);
         $this->filename = "sync-file.data";
         $this->generateFiles();
     }
@@ -58,8 +56,7 @@ class AlreadySynchronizedRepositoryTest extends TestCase
         /** @var MockObject $repo */
         $repo = $this->repository;
 
-        $repo->method('findByName')->willReturn($this->metadataFile);
-        $repo->method('getContent')->willReturn("invalid content");
+        $repo->method('getContentByFilename')->willReturn("invalid content");
         $this->expectException(LogicException::class);
         new AlreadySynchronizedRepository($this->repository, $this->filename);
     }
@@ -77,8 +74,7 @@ class AlreadySynchronizedRepositoryTest extends TestCase
         /** @var MockObject $repo */
         $repo = $this->repository;
 
-        $repo->method('findByName')->willReturn($this->metadataFile);
-        $repo->method('getContent')->willReturn(serialize([
+        $repo->method('getContentByFilename')->willReturn(serialize([
             $this->createMock(FileInterface::class),
             $this->createMock(FileInterface::class),
             $this->createMock(FileInterface::class),
@@ -100,9 +96,7 @@ class AlreadySynchronizedRepositoryTest extends TestCase
         /** @var MockObject $repo */
         $repo = $this->repository;
 
-        $repo->method('findByName')->willReturn($this->metadataFile);
-
-        $repo->method('getContent')->willReturn(serialize([
+        $repo->method('getContentByFilename')->willReturn(serialize([
             $this->file1->getUniqueName() => $this->file1,
             $this->file2->getUniqueName() => $this->file2,
             $this->dir->getUniqueName() => $this->dir,
@@ -153,9 +147,7 @@ class AlreadySynchronizedRepositoryTest extends TestCase
         /** @var MockObject $repo */
         $repo = $this->repository;
 
-        $repo->method('findByName')->willReturn($this->metadataFile);
-
-        $repo->method('getContent')->willReturn(serialize([
+        $repo->method('getContentByFilename')->willReturn(serialize([
             $this->file1->getUniqueName() => $this->file1,
             $this->file2->getUniqueName() => $this->file2,
             $this->dir->getUniqueName() => $this->dir,
@@ -214,9 +206,7 @@ class AlreadySynchronizedRepositoryTest extends TestCase
     {
         /** @var MockObject $repo */
         $repo = $this->repository;
-        $repo->method('findByName')->willReturn($this->metadataFile);
-
-        $repo->method('getContent')->willReturn(serialize([
+        $repo->method('getContentByFilename')->willReturn(serialize([
             $this->file1->getUniqueName() => $this->file1,
             $this->dir->getUniqueName() => $this->dir,
         ]));
@@ -258,9 +248,7 @@ class AlreadySynchronizedRepositoryTest extends TestCase
     {
         /** @var MockObject $repo */
         $repo = $this->repository;
-        $repo->method('findByName')->willReturn($this->metadataFile);
-
-        $repo->method('getContent')->willReturn(serialize([
+        $repo->method('getContentByFilename')->willReturn(serialize([
             $this->file1->getUniqueName() => $this->file1,
             $this->file2->getUniqueName() => $this->file2,
             $this->dir->getUniqueName() => $this->dir,
@@ -314,9 +302,7 @@ class AlreadySynchronizedRepositoryTest extends TestCase
     {
         /** @var MockObject $repo */
         $repo = $this->repository;
-        $repo->method('findByName')->willReturn($this->metadataFile);
-
-        $repo->method('getContent')->willReturn(serialize([
+        $repo->method('getContentByFilename')->willReturn(serialize([
             $this->file1->getUniqueName() => $this->file1,
             $this->file2->getUniqueName() => $this->file2,
             $this->dir->getUniqueName() => $this->dir,

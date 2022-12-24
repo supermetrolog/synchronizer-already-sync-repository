@@ -24,10 +24,7 @@ class AlreadySynchronizedRepository implements AlreadySynchronizedRepositoryInte
     }
     private function loadFiles(): void
     {
-        if (($metadataFile = $this->repository->findByName($this->filename)) === null) {
-            return;
-        }
-        if (($content = $this->repository->getContent($metadataFile)) === null) {
+        if (($content = $this->repository->getContentByFilename($this->filename)) === null) {
             return;
         }
         if (!($files = unserialize($content))) {
